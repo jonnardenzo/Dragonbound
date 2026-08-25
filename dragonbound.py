@@ -134,44 +134,6 @@ def battle(player_stats, goblin):
         f'Received {goblin["gold"]} gold!',
         f'You now have {player_stats["gold"]} gold!'
     )
-
-
-def shop(player_stats):
-    while True:
-        print('Welcome to the shop! Buy your wares!')
-        print('1. Health Potion - 10 Gold')
-        print('2. Mana Potion - 10 Gold')   
-
-        choice = input('Choose an item to buy or type "exit" to leave: ')
-
-        if choice == '1':
-            if player_stats["gold"] < 10:
-                print('Not enough gold!')
-                continue
-            print('You bought a Health Potion!')
-            print(f'You now have {player_stats["gold"]} gold.')
-            player_stats["inventory"].append("Health Potion")
-            player_stats["gold"] -= 10
-
-        elif choice == '2':
-            if player_stats["gold"] < 10:
-                print('Not enough gold!')
-                continue
-            print('You bought a Mana Potion!')
-            print(f'You now have {player_stats["gold"]} gold.')
-            player_stats["inventory"].append("Mana Potion")
-            player_stats["gold"] -= 10
-        
-        elif choice.lower() == 'exit':
-            print('Leaving the shop...')
-            break
-
-# IN DEVELOPMENT
-def inn(player_stats):
-    print('You rest at the inn.')
-    player_stats["hp"] = player_stats["max_hp"]
-    print(f'Your HP is now restored to {player_stats["hp"]}.')
-    input('Press Enter to return to Honeywood...')
   
 def honeywood(player_stats):
     while True:
@@ -211,7 +173,41 @@ def honeywood(player_stats):
         except ValueError:
             print('Please enter a number!')
 
+def shop(player_stats):
+    while True:
+        print('Welcome to the shop! Buy your wares!')
+        print('1. Health Potion - 10 Gold')
+        print('2. Mana Potion - 10 Gold')   
 
+        choice = input('Choose an item to buy or type "exit" to leave: ')
+
+        if choice == '1':
+            if player_stats["gold"] < 10:
+                print('Not enough gold!')
+                continue
+            print('You bought a Health Potion!')
+            print(f'You now have {player_stats["gold"]} gold.')
+            player_stats["inventory"].append("Health Potion")
+            player_stats["gold"] -= 10
+
+        elif choice == '2':
+            if player_stats["gold"] < 10:
+                print('Not enough gold!')
+                continue
+            print('You bought a Mana Potion!')
+            print(f'You now have {player_stats["gold"]} gold.')
+            player_stats["inventory"].append("Mana Potion")
+            player_stats["gold"] -= 10
+        
+        elif choice.lower() == 'exit':
+            print('Leaving the shop...')
+            break
+
+def inn(player_stats):
+    print('You rest at the inn.')
+    player_stats["hp"] = player_stats["max_hp"]
+    print(f'Your HP is now restored to {player_stats["hp"]}.')
+    input('Press Enter to return to Honeywood...')
 
 
 # GAME START
