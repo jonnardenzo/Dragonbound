@@ -1,3 +1,7 @@
+import random
+
+
+
 # DRAGONBOUND VERSION 0.2
 
 print('Welcome to Dragonbound!')
@@ -90,14 +94,26 @@ def goblin_stats():
         'gold': 10,
         'inventory': [],
     }
+    return stats
 
+def wolf_stats():
+    stats = {
+        'name': 'Wolf',
+        'class': 'Monster',
+        'weapon': 'Fangs',
+        'level': 1,
+        'hp': 30,
+        'mana': 0,
+        'gold': 15,
+        'inventory': ['Wolf Fur'],
+    }
     return stats
 
 
-def battle(player_stats, goblin):
-    print('A wild Goblin Appears!')
+def battle(player_stats, monster):
+    print(f'A wild {monster["name"]} Appears!')
 
-    while goblin['hp'] > 0:
+    while monster['hp'] > 0:
         print('1. Attack')
         print('2. Spells')
 
@@ -105,19 +121,19 @@ def battle(player_stats, goblin):
             battle_choice = int(input('1. Attack, 2. Spells: '))
 
             if battle_choice == 1:
-                goblin['hp'] -= 10
+                monster['hp'] -= 10
                 print(
-                    'You attacked the Goblin!',
-                    "Goblin's HP:",
-                    goblin['hp']
+                    'You attacked the monster!',
+                    f"{monster['name']}'s HP:",
+                    monster['hp']
                 )
 
             elif battle_choice == 2:
-                goblin['hp'] -= 15
+                monster['hp'] -= 15
                 print(
                     'You cast a spell!',
-                    "Goblin's HP:",
-                    goblin['hp']
+                    f"{monster['name']}'s HP:",
+                    monster['hp']
                 )
 
             else:
@@ -126,12 +142,12 @@ def battle(player_stats, goblin):
         except ValueError:
             print('Please Enter A Number!')
 
-    print('Goblin has been defeated!')
+    print(f'{monster["name"]} has been defeated!')
 
-    player_stats["gold"] += goblin["gold"]
+    player_stats["gold"] += monster["gold"]
 
     print(
-        f'Received {goblin["gold"]} gold!',
+        f'Received {monster["gold"]} gold!',
         f'You now have {player_stats["gold"]} gold!'
     )
   
@@ -152,16 +168,13 @@ def honeywood(player_stats):
                 shop(player_stats)
 
             elif choice == 2:
-                print('You rest at the inn.')
-                input('Press Enter to return to Honeywood...')
+                inn(player_stats)
 
             elif choice == 3:
                 show_character(player_stats)
-                input('Press Enter to return to Honeywood...')
 
             elif choice == 4:
-                print('You head into the forest.')
-                input('Press Enter to return to Honeywood...')
+                forest(player_stats)
 
             elif choice == 5:
                 print('Thanks for playing Dragonbound!')
@@ -178,7 +191,7 @@ def shop(player_stats):
         print('Welcome to the shop! Buy your wares!')
         print('1. Health Potion - 10 Gold')
         print('2. Mana Potion - 10 Gold')   
-
+ 
         choice = input('Choose an item to buy or type "exit" to leave: ')
 
         if choice == '1':
@@ -209,6 +222,35 @@ def inn(player_stats):
     print(f'Your HP is now restored to {player_stats["hp"]}.')
     input('Press Enter to return to Honeywood...')
 
+def forest(player_stats):
+    while True:
+        print('You venture into the forest.')
+        print('1. Explore deeper into the forest')
+        print('2. Rest')
+        print('3. Return to Honeywood')
+
+        choice = input('Choose an option: ')
+
+        if choice == '1':
+            monster_choice = random.choice([goblin_stats, wolf_stats])()
+            monster = monster_choice
+
+            print(f'You encounter a {monster["name"]}!')
+            input('Press Enter to battle...!')
+
+            battle(player_stats, monster)
+
+        elif choice == '2':
+            print('You take a rest in the forest. Your HP is restored.')
+            player_stats["hp"] = player_stats["max_hp"]
+            input('Press Enter to continue...')
+
+        elif choice == '3':
+            print('Returning to Honeywood...')
+            break
+
+        else:
+            print('Invalid choice! Choose between the options!')
 
 # GAME START
 
